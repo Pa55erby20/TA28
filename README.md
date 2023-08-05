@@ -1,2 +1,2 @@
 # TA28
-# Stroe all the data file
+Stroe all the data file
