@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import json
@@ -142,7 +142,7 @@ Dict
 pd.crosstab(df['suburb_list'],df['postcode'])
 
 
-# In[15]:
+# In[2]:
 
 
 import pandas as pd
@@ -200,7 +200,7 @@ for each in range(0,len(data)):
         geo_point_2d_list.append(data[each]['geo_point_2d'])
 
 
-# In[16]:
+# In[3]:
 
 
 df_geo = pd.DataFrame(list(zip(geo_postcode_list,
@@ -215,7 +215,7 @@ df_geo = pd.DataFrame(list(zip(geo_postcode_list,
 df_geo
 
 
-# In[18]:
+# In[8]:
 
 
 df_ele = pd.DataFrame(list(zip(ele_year_list, 
@@ -246,11 +246,18 @@ df_ele = df_ele.groupby('postcode')[['total_electricity_kwh',
                          'rest_of_municipality_emissions_kg_co2e']].mean()
 
 df_ele = df_ele.reset_index()
-df_ele['emission_source'] = 'Gas'
+df_ele['emission_source'] = 'Electricity'
+df_ele
+df_ele.to_csv('df_ele.csv', index=False)
+
+
+# In[9]:
+
+
 df_ele
 
 
-# In[19]:
+# In[10]:
 
 
 # print(gas_geo_point_2d_list)
@@ -282,14 +289,29 @@ df_gas = df_gas.groupby('postcode')[['total_gas_gj',
                          'rest_of_municipality_emissions_kg_co2e']].mean()
 
 df_gas = df_gas.reset_index()
-df_gas['emission_source'] = 'Electricity'
+df_gas['emission_source'] = 'Gas'
+df_gas
+df_gas.to_csv('df_gas.csv', index=False)
+
+
+# In[11]:
+
+
 df_gas
 
 
-# In[9]:
+# In[8]:
 
 
-df_gas
+ele_coef = df_ele['total_emissions_kg_co2e'].sum()/df_ele['total_electricity_kwh'].sum()
+ele_coef
+
+
+# In[10]:
+
+
+gas_coef = df_gas['total_emissions_kg_co2e'].sum()/df_gas['total_gas_gj'].sum()
+gas_coef
 
 
 # In[ ]:
