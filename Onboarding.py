@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import json
@@ -312,6 +312,77 @@ ele_coef
 
 gas_coef = df_gas['total_emissions_kg_co2e'].sum()/df_gas['total_gas_gj'].sum()
 gas_coef
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[5]:
+
+
+import pandas as pd
+
+year_list = []
+postcode_list = []
+emission_source_list = []
+average_emissions_per_customer_kg_co2e_list = []
+
+for a in range(0,len(data)):
+    year_list.append(data[a]['year'])
+    postcode_list.append(data[a]['postcode'])
+    emission_source_list.append(data[a]['emission_source'])
+    average_emissions_per_customer_kg_co2e_list.append(data[a]['average_emissions_per_customer_kg_co2e'])
+
+
+# In[23]:
+
+
+df_total = pd.DataFrame(list(zip(year_list, 
+                           postcode_list, 
+                           emission_source_list, 
+                           average_emissions_per_customer_kg_co2e_list)),
+                  
+               columns =['year', 
+                         'postcode',
+                         'emission_source', 
+                         'average_emissions_per_customer_kg_co2e'])
+df_total
+
+
+# In[24]:
+
+
+df_total
+
+
+# In[33]:
+
+
+df_total = df_total.dropna(axis=0,how='any')
+
+df_total = df_total.groupby('postcode')[['average_emissions_per_customer_kg_co2e']].sum()
+df_total_per_month = df_total.reset_index()
+
+df_total_per_month['average_emissions_per_customer_kg_co2e_per_month'] = df_total_per_month['average_emissions_per_customer_kg_co2e'].map(lambda x: x/3/12)
+df_total_per_month = df_total_per_month.drop(columns=['average_emissions_per_customer_kg_co2e'])
+df_total_per_month
+
+df_total_per_month.to_csv('df_total_per_month.csv', index=False)
+
+
+# In[34]:
+
+
+
 
 
 # In[ ]:
