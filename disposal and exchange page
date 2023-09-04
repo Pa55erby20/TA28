@@ -148,7 +148,7 @@
       
       if (searchType === 'Disposal') {
         if (selectedStore === 'All') {
-          queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'];
+          queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'].concat(mylist.names); // 将 myList 中的商店名添加到查询项
         } else if (selectedStore === 'Other') {
           queries = mylist.names.filter(name => !['Ecycle Solutions', 'The Good Guys', 'Officeworks'].includes(name));
         } else {
