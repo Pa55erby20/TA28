@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store Locator</title>
+  <!-- Include the Google Maps JavaScript API with your API key and required libraries -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2ZXJFyMhCGAO6Uo08w_tTZbdbhLY7OcQ&libraries=places&callback=initializeMap" async defer></script>
+  <style>
+    /* Styling for the page elements */
+    body, select, input, label, button {
+      font-size: 16px;
+      font-family: "Poppins", sans-serif;
+      color: black;
+    }
+    .wp-block-button {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    #searchButton {
+      font-size: 20px;
+      padding: 10px 30px;
+      margin: 0 auto;
+      display: inline-block;
+      background-color: #615eec;
+      border: none;
+      border-radius:50px;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    #searchButton:hover {
+      background-color: #222;
+    }
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+    #listOfLocations {
+      max-height: 1000px;
+      overflow: auto;
+      color: black;
+    }
+    #postcode, #storeType, #searchType {
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 50%;
+      height: 45px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    #postcode::placeholder {
+      color: black;
+      font-size: 16px;
+    }
+    label[for="postcode"], label[for="storeType"], label[for="searchType"] {
+      display: block;
+      text-align: center;
+      color: black;
+    }
+    #storeType, #searchType {
+      background-color: transparent;
+      border: 1px solid #ccc;
+      color: black;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <form id="searchForm">
+    <!-- Type selection dropdown -->
+    <label for="searchType">Select Type: </label>
+    <select id="searchType">
+      <option value="Disposal">Disposal</option>
+      <option value="Exchange">Exchange</option>
+    </select>
+    
+    <!-- Postcode input -->
+    <label for="postcode">Enter Postcode: * </label>
+    <input type="text" id="postcode" name="postcode" placeholder="Postcode" required/>
+    
+    <!-- Store selection dropdown (to be dynamically generated) -->
+    <label for="storeType">Select Store: </label>
+    <select id="storeType">
+      <!-- Options will be dynamically generated -->
+    </select>
+    
+    <!-- Search button -->
+    <div class="wp-block-button">
+      <br>
+      <button type="submit" id="searchButton" class="wp-block-button__link has-text-align-center wp-element-button">Search</button>
+    </div>
+  </form>
+  
+  <!-- Map container -->
+  <div id="map"></div>
+  
+  <!-- List of locations container -->
+  <div id="listOfLocations"></div>
+  
+  <script>
+    var map, infowindow, markers = [], allResults = [];
+    
+    // Initialize the map and set up event listeners
+    function initializeMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: -37.8132, lng: 144.963 }, // Default map center coordinates
+        zoom: 12 // Default zoom level
+      });
+      infowindow = new google.maps.InfoWindow();
+      
+      // Add a listener to the search form for form submission
+      document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+        performSearch(); // Perform the search when the form is submitted
+      });
+      
+      updateStoreOptions(); // Initialize store options
+      // Add a listener to the searchType dropdown to update store options when type changes
+      document.getElementById('searchType').addEventListener('change', updateStoreOptions);
+      
+      performSearch(); // Perform the initial search
+      getNamelist(); // Get the list of facility names
+    }
+    
+    // Update the store selection options based on the selected type
+    function updateStoreOptions() {
+      var searchType = document.getElementById('searchType').value;
+      var storeTypeSelect = document.getElementById('storeType');
+      var options;
+      
+      if (searchType === 'Disposal') {
+        options = ['All', 'The Good Guys', 'Officeworks', 'Ecycle Solutions', 'Other'];
+      } else {
+        options = ['All', 'EB Games', 'JB Hi-Fi', 'Harvey Norman'];
+      }
+      
+      storeTypeSelect.innerHTML = options.map(function(option) {
+        return '<option value="' + option + '">' + option + '</option>';
+      }).join('');
+    }
+    
+    // Perform the store search based on user input
+    function performSearch() {
+      var searchType = document.getElementById('searchType').value;
+      var postcode = document.getElementById('postcode').value;
+      var selectedStore = document.getElementById('storeType').value;
+      var queries;
+      var mylist = getNamelist();
+      
+      if (searchType === 'Disposal') {
+        if (selectedStore === 'All') {
+          queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'];
+        } else if (selectedStore === 'Other') {
+          queries = mylist.names.filter(name => !['Ecycle Solutions', 'The Good Guys', 'Officeworks'].includes(name));
+        } else {
+          queries = [selectedStore];
+        }
+      } else {
+        if (selectedStore === 'All') {
+          queries = ['JB Hi-Fi', 'EB Games', 'Harvey Norman'];
+        } else if (selectedStore === 'Other') {
+          queries = mylist.names.filter(name => !['JB Hi-Fi', 'EB Games', 'Harvey Norman'].includes(name));
+        } else {
+          queries = [selectedStore];
+        }
+      }
+      
+      if (postcode) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: postcode }, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            var bounds = results[0].geometry.bounds;
+            allResults = [];
+            queries.forEach(function(query) {
+              searchStores(bounds, query);
+            });
+            map.fitBounds(bounds);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    }
+    
+    // Search for stores within the specified bounds and query
+    function searchStores(bounds, query) {
+      clearMarkers();
+      var request = {
+        bounds: bounds,
+        query: query
+      };
+      var service = new google.maps.places.PlacesService(map);
+      service.textSearch(request, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          allResults = allResults.concat(results);
+          displayListAndMarkers(allResults);
+        } else {
+          alert('Search was not successful for the following reason: ' + status);
+        }
+      });
+    }
+    
+    // Clear all markers from the map
+    function clearMarkers() {
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+    }
+    
+    // Display the list of locations and add markers to the map
+    function displayListAndMarkers(locations) {
+      var listContainer = document.getElementById('listOfLocations');
+      listContainer.innerHTML = '<h4>List of Locations:</h4><ul></ul>';
+      var list = listContainer.querySelector('ul');
+      locations.forEach(function(location, index) {
+        var marker = createMarker(location);
+        markers.push(marker);
+        if (map.getBounds().contains(marker.getPosition())) {
+          marker.setMap(map);
+          var listItem = document.createElement('li');
+          var addressLink = '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location.formatted_address) + '" target="_blank" style="font-size: 14px;">Open in Google Maps</a>';
+          var separator = '<hr style="margin: 5px 0;">'; // Line separator
+          listItem.innerHTML = '<strong>' + location.name + '</strong><br><span>' + location.formatted_address + '</span><br>' + separator;
+          list.appendChild(listItem);
+        }
+      });
+    }
+    
+    // Get the list of facility names (to be replaced with actual data)
+    function getNamelist() {
+      var facilityNames = [];
+      var facilityX = [];
+      var facilityY = [];
+      
+      // Replace this with your actual data retrieval logic
+      // Sample data is used here
+      for (var i = 0; i < ajax_object.facility_names.length; i++) {
+        var name = ajax_object.facility_names[i].facility_name;
+        var lng = ajax_object.facility_names[i].X;
+        var lat = ajax_object.facility_names[i].Y;
+        facilityNames.push(name);
+        facilityX.push(lng);
+        facilityY.push(lat);
+      }
+      
+      var result = {
+        names: facilityNames,
+        X: facilityX,
+        Y: facilityY
+      };
+      
+      return result;
+    }
+    
+    // Create a marker for a location
+    function createMarker(place) {
+      var marker = new google.maps.Marker({
+        map: null, // Initially not on the map
+        position: place.geometry.location
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        var content = '<strong>' + place.name + '</strong><br>' + place.formatted_address;
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+      });
+      return marker;
+    }
+  </script>
+</body>
+</html>
