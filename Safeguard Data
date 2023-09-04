@@ -1,0 +1,113 @@
+<!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"100px","bottom":"100px"}}},"backgroundColor":"background","className":"skt-fse-sec skt-fse-section4","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<section class="wp-block-group skt-fse-sec skt-fse-section4 has-background-background-color has-background" style="padding-top:100px;padding-bottom:100px"><!-- wp:columns {"style":{"spacing":{"padding":{"bottom":"30px"}}}} -->
+<div class="wp-block-columns" style="padding-bottom:30px"><!-- wp:column {"width":"100%"} -->
+<div class="wp-block-column" style="flex-basis:100%"><!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"30px"},"padding":{"left":"0px"}}}} -->
+<div class="wp-block-columns" style="padding-left:0px"><!-- wp:column {"className":"skt-fse-section4-box","layout":{"type":"default"}} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1789,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Apple-logo.png" alt="" class="wp-image-1789" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"40px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:40px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Mobile Phone</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600","textTransform":"none"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600;text-transform:none"><a href="https://toonsquad.world/index.php/iphone_ipad/">iPhone</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"skt-fse-section4-box"} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1789,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Apple-logo.png" alt="" class="wp-image-1789" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"45px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:45px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Laptop</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600"><a href="https://toonsquad.world/index.php/deletion-guide/macbook/">MacBook</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"skt-fse-section4-box","layout":{"type":"default"}} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1789,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none","className":"is-style-default"} -->
+<figure class="wp-block-image aligncenter size-full is-resized is-style-default"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Apple-logo.png" alt="" class="wp-image-1789" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"40px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:40px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Tablet</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600"><a href="https://toonsquad.world/index.php/iphone_ipad/">iPad</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column {"width":"100%"} -->
+<div class="wp-block-column" style="flex-basis:100%"><!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"30px"}}}} -->
+<div class="wp-block-columns"><!-- wp:column {"className":"skt-fse-section4-box"} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1794,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Android_logo_2014-2019.png" alt="" class="wp-image-1794" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"41px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:41px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Mobile Phone</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600"><a href="https://toonsquad.world/index.php/deletion-guide/android/" data-type="URL" data-id="https://toonsquad.world/index.php/deletion-guide/android/">Android</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"skt-fse-section4-box"} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1802,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Windows_logo_-_2012.svg_.png" alt="" class="wp-image-1802" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"42px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:42px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Laptop</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600"><a href="https://toonsquad.world/index.php/deletion-guide/windows/">Windows 11</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"skt-fse-section4-box"} -->
+<div class="wp-block-column skt-fse-section4-box"><!-- wp:group {"style":{"spacing":{"padding":{"top":"60px","right":"35px","bottom":"70px","left":"35px"}},"border":{"radius":"15px"},"color":{"background":"#eff5fa"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:15px;background-color:#eff5fa;padding-top:60px;padding-right:35px;padding-bottom:70px;padding-left:35px"><!-- wp:image {"align":"center","id":1794,"width":200,"height":200,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://toonsquad.world/wp-content/uploads/2023/09/Android_logo_2014-2019.png" alt="" class="wp-image-1794" width="200" height="200"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"textAlign":"center","level":5,"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600","textTransform":"capitalize"},"spacing":{"padding":{"top":"44px","bottom":"5px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h5 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:44px;padding-bottom:5px;font-size:18px;font-style:normal;font-weight:600;text-transform:capitalize">Tablet</h5>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontSize":"24px","fontStyle":"normal","fontWeight":"600"},"spacing":{"padding":{"top":"0px","bottom":"0px"}},"color":{"text":"#0a1d2d"}},"fontFamily":"poppins"} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color has-poppins-font-family" style="color:#0a1d2d;padding-top:0px;padding-bottom:0px;font-size:24px;font-style:normal;font-weight:600"><a href="https://toonsquad.world/index.php/deletion-guide/android/">Android</a></h3>
+<!-- /wp:heading --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></section>
+<!-- /wp:group -->
