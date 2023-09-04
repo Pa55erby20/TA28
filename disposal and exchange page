@@ -145,7 +145,6 @@
       var selectedStore = document.getElementById('storeType').value;
       var queries;
       var mylist = getNamelist();
-      
       if (searchType === 'Disposal') {
         if (selectedStore === 'All') {
           queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'].concat(mylist.names); // 将 myList 中的商店名添加到查询项
@@ -163,26 +162,49 @@
           queries = [selectedStore];
         }
       }
-      
+    
       if (postcode) {
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ address: postcode }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
-            var bounds = results[0].geometry.bounds;
+            var center = results[0].geometry.location;
+            var circle = new google.maps.Circle({
+              center: center,
+              radius: 2000 // 10km in meters
+            });
+            var bounds = circle.getBounds();
             allResults = [];
             queries.forEach(function(query) {
               searchStores(bounds, query);
             });
             map.fitBounds(bounds);
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            var defaultLocation;
+            if (postcode === "3060") {
+              defaultLocation = { lat: -37.70357854700488, lng: 144.97204631188902 }; // Default for 3060
+            } else if (postcode === "3000") {
+              defaultLocation = { lat: -37.8132, lng: 144.963 };
+            } else {
+              alert('Search was not successful for the following reason: NO Result! Set as default location');
+              defaultLocation = { lat: -37.8132, lng: 144.963 }; // General default
+            }
+            
+            var circle = new google.maps.Circle({
+              center: defaultLocation,
+              radius: 2000 // 3km in meters
+            });
+            var bounds = circle.getBounds();
+            allResults = [];
+            queries.forEach(function(query) {
+              searchStores(bounds, query);
+            });
+            map.fitBounds(bounds);
           }
         });
       }
     }
-    
-    // Search for stores within the specified bounds and query
-    function searchStores(bounds, query) {
+
+    function searchStores(bounds, query, retry = false) {
       clearMarkers();
       var request = {
         bounds: bounds,
@@ -193,11 +215,21 @@
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           allResults = allResults.concat(results);
           displayListAndMarkers(allResults);
-        } else {
-          alert('Search was not successful for the following reason: ' + status);
+        } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS && !retry) {
+          // Retry with a larger radius if no results are found
+          var center = bounds.getCenter();
+          var circle = new google.maps.Circle({
+            center: center,
+            radius: 2000 // 3km in meters
+          });
+          var newBounds = circle.getBounds();
+          searchStores(newBounds, query, true);
+        // } else {
+        //   alert('Search was not successful for the following reason: ' + status);
         }
       });
     }
+
     
     // Clear all markers from the map
     function clearMarkers() {
