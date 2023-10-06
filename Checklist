@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Privacy & E-Waste Recycling Checklist</title>
+    <style>
+        h3, input, label, p {
+            color: black; /* Change text color to black */
+        }
+
+        .checklist-item {
+            margin-bottom: 10px;
+            text-align: left; /* Align checklist items to the left */
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center content horizontally */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 60px;
+            margin: 40px auto;
+            width: 900px; /* Fixed width */
+        }
+
+        /* Updated button styles */
+        .button, .next-button {
+            display: none; /* Initially hide the response buttons */
+            font-size: 16px;
+            padding: 10px 30px;
+            margin: 10px; /* Add some margin for spacing */
+            background-color: #615eec;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            transition: all 0.2s;
+        }
+        
+        .button:hover, .next-button:hover {
+            background-color: #222;
+            color: white;
+        }
+        /* Updated button styles end */
+
+        input[type="submit"], .next-button {
+            width: auto; /* Let the button adjust its width based on content */
+            padding: 10px 40px; /* Adjust padding to make it smaller */
+            font-size: 16px; /* Adjust font size to make it smaller */
+        }
+
+        .center-submit-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Increase the size of the checkbox */
+        .checklist-item input[type="checkbox"] {
+            transform: scale(1.5); /* Increase the size by adjusting the scale factor */
+            margin-right: 10px; /* Add some spacing between the checkbox and label */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h3>Your checklist in securing data:</h3>
+        <form id="checklistForm">
+            <div class="checklist-item">
+                <input type="checkbox" id="item1" name="item1">
+                <label for="item1">Understand basic data privacy principles.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item2" name="item2">
+                <label for="item2">Back up all necessary files to another device or the cloud.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item3" name="item3">
+                <label for="item3">Check for external storage.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item5" name="item5">
+                <label for="item5">Logout and remove all personal information from all applications.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item6" name="item6">
+                <label for="item6">Remove Google Account or Apple ID. </label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item7" name="item7">
+                <label for="item7">Remove available payment methods.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="item8" name="item8">
+                <label for="item8">Factory reset device.</label>
+            </div>
+            
+            <br>
+            
+            <!-- New content for user to add their own checklist -->
+            <!--<div class="checklist-item">-->
+            <!--    <input type="text" id="newItem" placeholder="Enter your checklist item here">-->
+            <!--    <button type="button" class="btn" id="addBtn">+</button>-->
+            <!--    <button type="button" class="btn" id="removeBtn">-</button>-->
+            <!--</div>-->
+
+            <!-- Centered "Submit" button div -->
+            <div class="center-submit-button">
+                <input type="submit" value="Submit">
+            </div>
+            
+            <br>
+            
+            <h3 id="congrats-message" style="text-align: center; display: none;">Well done! You can now proceed to the next step.</h3>
+            
+            <!-- Button to redirect to a new page -->
+            <div class="center-submit-button">
+                <a href="https://toonsquad.world/index.php/drop-off-sites/" class="button next-button" style="display: none;">Next > </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('checklistForm');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const nextButton = document.querySelector('.button');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                let completedItems = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        completedItems++;
+                    }
+                });
+
+                if (completedItems === 7) {
+                    nextButton.style.display = 'none'; // Hide the "Next" button until form submission
+                }
+            });
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let completedItemsCount = 0;
+            let uncompletedItemsList = [];
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedItemsCount++;
+                } else {
+                    uncompletedItemsList.push(checkbox.nextElementSibling.textContent);
+                }
+            });
+
+            if (completedItemsCount < 7) {
+                alert('You have completed ' + completedItemsCount + ' out of 7 tasks.\n\nKindly complete the following tasks left:\n' + uncompletedItemsList.join('\n') + '\n\nPlease complete the remaining tasks to proceed to the next step.');
+            } else {
+                // Display the "Congrats!" message outside the container
+                const congratsMessage = document.getElementById('congrats-message');
+                congratsMessage.style.display = 'block';
+                // Show the "Next" button
+                nextButton.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
