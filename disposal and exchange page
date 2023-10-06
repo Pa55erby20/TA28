@@ -4,6 +4,7 @@
   <title>Store Locator</title>
   <!-- Include the Google Maps JavaScript API with your API key and required libraries -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2ZXJFyMhCGAO6Uo08w_tTZbdbhLY7OcQ&libraries=places&callback=initializeMap" async defer></script>
+
   <style>
     /* Styling for the page elements */
     body, select, input, label, button {
@@ -15,14 +16,25 @@
       text-align: center;
       margin-bottom: 40px;
     }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form-element {
+      width: calc(25% - 20px); /* Adjust the width as needed to fit your design */
+      margin-right: 20px;
+    }
+
     #searchButton {
-      font-size: 20px;
-      padding: 10px 30px;
-      margin: 0 auto;
+      font-size: 15px;
+      margin-top: 24px;
+      padding: 10px 20px;
       display: inline-block;
       background-color: #615eec;
       border: none;
-      border-radius:50px;
+      border-radius: 50px;
       color: #fff;
       transition: all 0.2s;
     }
@@ -30,7 +42,7 @@
       background-color: #222;
     }
     #map {
-      height: 400px;
+      height: 600px;
       width: 100%;
     }
     #listOfLocations {
@@ -41,7 +53,7 @@
     #postcode, #storeType, #searchType {
       display: block;
       margin: 0 auto 10px auto;
-      width: 50%;
+      width: 90%;
       height: 45px;
       text-align: center;
       border: 1px solid #ccc;
@@ -66,27 +78,30 @@
 </head>
 <body>
   <form id="searchForm">
-    <!-- Type selection dropdown -->
-    <label for="searchType">Select Type: </label>
-    <select id="searchType">
-      <option value="Disposal">Disposal</option>
-      <option value="Exchange">Exchange</option>
-    </select>
-    
-    <!-- Postcode input -->
-    <label for="postcode">Enter Postcode: * </label>
-    <input type="text" id="postcode" name="postcode" placeholder="Postcode" required/>
-    
-    <!-- Store selection dropdown (to be dynamically generated) -->
-    <label for="storeType">Select Store: </label>
-    <select id="storeType">
-      <!-- Options will be dynamically generated -->
-    </select>
-    
-    <!-- Search button -->
-    <div class="wp-block-button">
-      <br>
-      <button type="submit" id="searchButton" class="wp-block-button__link has-text-align-center wp-element-button">Search</button>
+    <div class="form-row">
+      <div class="form-element">
+        <label for="searchType">Select Type:</label>
+        <select id="searchType">
+          <option value="Disposal">Disposal</option>
+          <option value="Exchange">Exchange</option>
+        </select>
+      </div>
+
+      <div class="form-element">
+        <label for="postcode">Enter Postcode:</label>
+        <input type="text" id="postcode" name="postcode" placeholder="Postcode" required/>
+      </div>
+
+      <div class="form-element">
+        <label for="storeType">Select Store:</label>
+        <select id="storeType">
+          <!-- Options will be dynamically generated -->
+        </select>
+      </div>
+
+      <div class="form-element wp-block-button">
+        <button type="submit" id="searchButton" class="wp-block-button__link has-text-align-center wp-element-button">Find Nearest Location</button>
+      </div>
     </div>
   </form>
   
@@ -147,7 +162,7 @@
       var mylist = getNamelist();
       if (searchType === 'Disposal') {
         if (selectedStore === 'All') {
-          queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'].concat(mylist.names); // 将 myList 中的商店名添加到查询项
+          queries = ['Ecycle Solutions', 'The Good Guys', 'Officeworks'].concat(mylist.names); 
         } else if (selectedStore === 'Other') {
           queries = mylist.names.filter(name => !['Ecycle Solutions', 'The Good Guys', 'Officeworks'].includes(name));
         } else {
