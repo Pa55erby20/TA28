@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Strengthening Cybersecurity, Enhancing Personal Data Privacy: Australia's Comprehensive Approach</title>
+    <style>
+        /* Set all text to black */
+        body, h1, h2, p, a {
+            color: black;
+            text-decoration: none;
+        }
+        
+        /* Adjust content layout */
+        main {
+            margin-left: 10px;
+        }
+
+        /* Clear the float to ensure proper layout */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardwaste Collected Chart</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main>
+        <div class="article-container">
+            <h2>Strengthening Cybersecurity, Enhancing Personal Data Privacy: Australia's Comprehensive Approach</h2>
+            <p> In an era where digitalization shapes our daily lives, cybersecurity and personal data privacy have emerged as pivotal concerns. Australia, a nation known for its technological prowess, is actively addressing these challenges. </p>
+
+        <h3 id="elevating-cybersecurity">Elevating Cybersecurity and Bridging the Gap</h3>
+        
+        <p>The <a href="https://www.kaggle.com/datasets/katerynameleshenko/cyber-security-indexes?resource=download" target="_blank"><i>Cybersecurity Indexes</i></a> provides valuable insights into the current global cybersecurity landscape, featuring two key indicators.</p>
+
+        <div style="display: flex; justify-content: center; align-items: center; height: 100;">
+            <iframe height="550" width="1000" src="https://chengdsyu.shinyapps.io/cybersecurity_index/"></iframe>
+        </div>
+
+        <ul>
+            <li><u>Global Cyber Security Index (GCI): </u>Indicates Australia's dedication to cybersecurity. A higher GCI score reflects proactive safeguarding of digital assets and cyberspace integrity.</li>
+            <li><u>Cybersecurity Exposure Index (CEI): </u>Rates vulnerability to cybercrime. Australia's lower CEI score demonstrates reduced cyber threat risk and commitment to risk mitigation.</li>
+            <!--<li><u>National Cyber Security Index (NCSI): </u>Assesses Australia's cybersecurity readiness. A higher NCSI score reflects preparedness to address cyber threats and manage incidents.</li>-->
+            <!--<li><u>Digital Development Level (DDL): </u>Measures Australia's progress in digital development. A higher DDL score showcases commitment to personal data privacy and significant strides in digital development.</li>-->
+        </ul>
+
+        <!--<h3 id="linking-cybersecurity">Linking Cybersecurity to Personal Data Privacy</h3>-->
+
+        <!--<p>Australia's cybersecurity efforts are closely intertwined with personal data privacy. The cybersecurity indices illustrate this connection:</p>-->
+
+        <!--<ul>-->
+        <!--    <li><u>Data Protection and Privacy:</u> Australia's commitment to cybersecurity ensures the safeguarding of sensitive personal information and individual privacy.</li>-->
+        <!--    <li><u>Data Breach Prevention:</u> Effective cybersecurity practices are crucial in preventing unauthorized access and data breaches.</li>-->
+        <!--    <li><u>Regulatory Compliance:</u> High GCI scores signify strong cybersecurity practices, vital for regulatory compliance and fostering a culture of data privacy in line with laws.</li>-->
+        <!--    <li><u>Digital Development for Privacy:</u> Australia's high DDL values show progress in advanced cybersecurity practices, including encryption and data privacy enhancement.</li>-->
+        <!--</ul>-->
+
+        <h3 id="e-waste-concerns">E-Waste and Data Privacy Concerns</h3>
+
+        <p>Despite Australia's strong performance in cybersecurity, concerns about data privacy persist, especially when it comes to the disposal of electronic waste (e-waste). Only 8% Australians recycle e-waste due to fear of data loss</p>
+
+        <p>Electronic waste, or e-waste, comprises discarded electronic devices and equipment that are no longer in use or have reached the end of their life cycle. This includes but is not limited to:</p>
+
+        <div style="display: flex; justify-content: center; align-items: center; height: 100;">
+            <img src="https://live.staticflickr.com/65535/53179349408_7cdf3c92c9_k.jpg" alt="E-Waste" width="600" height="200">
+        </div>
+
+        <p><br>The recent news article <a href="https://www.news.com.au/technology/online/hacking/hidden-hacking-danger-in-ewaste-sold-secondhand-by-major-companies/news-story/26a97fc2b7a8a5ec277c27322d219346" target="_blank"><i>Hidden Hacking Danger in E-Waste Sold Secondhand by Major Companies</i></a> sheds light on this issue. It highlights the hidden risks associated with e-waste, even when sourced from reputable companies. E-waste must be managed responsibly to mitigate the risk of personal data exposure.</p>
+
+        <p>Australia faces a growing e-waste challenge, with statistics showing a significant increase in electronic waste generation. <a href="https://discover.data.vic.gov.au/dataset/victorian-local-government-waste-data" target="_blank"><i>The Victorian Local Government Annual Waste Services Survey</i></a> reveals a substantial increase in the amount of e-waste collected.</p>
+
+        <label for="councilSelect">Select Council:</label>
+        <select id="councilSelect" size="1">
+            <!-- Remove the "total" option since it's already in the data -->
+        </select>
+        <canvas id="collectedChart" width="400" height="200"></canvas>
+
+        <p><br>The data underscores the pressing need for collective efforts to reduce, reuse, and recycle e-waste. Resources such as <a href="https://www.sustainability.vic.gov.au/" target="_blank"><i>Sustainability Victoria</i></a> provide valuable information on how individuals can contribute to responsible e-waste disposal. Understanding why e-waste can't go in the bin and taking steps to recycle it properly is crucial for safeguarding personal data.</p>
+
+        <canvas id="collectedChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Your JSON data
+        const jsonData = ajax_object.council;
+        console.log(jsonData);
+
+        // Function to extract unique council names from the JSON data
+        function extractCouncilNames(data) {
+            const councilSet = new Set();
+            data.forEach(entry => councilSet.add(entry.council));
+            return Array.from(councilSet);
+        }
+
+        // Populate the select element with council options
+        const councilSelect = document.getElementById('councilSelect');
+        const councilNames = extractCouncilNames(jsonData);
+        councilNames.forEach(councilName => {
+            const option = document.createElement('option');
+            option.value = councilName;
+            option.textContent = councilName;
+            councilSelect.appendChild(option);
+        });
+
+        // Function to filter data by selected council
+        function filterData(selectedCouncil) {
+            return jsonData.filter(entry => entry.council === selectedCouncil && entry.hardwaste_collected_tonnes !== '0');
+        }
+
+        // Initialize chart variables
+        let chart;
+
+        // Function to update the chart
+        function updateChart(selectedCouncil) {
+            const ctx = document.getElementById('collectedChart').getContext('2d');
+
+            // Check if a chart already exists, and destroy it to avoid conflicts
+            if (chart) {
+                chart.destroy();
+            }
+
+            // Filter and display data for the selected council
+            const filteredData = filterData(selectedCouncil);
+            const years = filteredData.map(entry => entry.financial_year);
+            const collectedData = filteredData.map(entry => parseInt(entry.hardwaste_collected_tonnes, 10));
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Collected Tonnes',
+                        data: collectedData,
+                        backgroundColor: 'rgba(132, 167, 199, 0.6)'
+                    }, {
+                        // Add trendline data set here
+                        type: 'line',
+                        label: 'Trendline',
+                        data: calculateTrendline(collectedData),
+                        borderColor: 'rgba(100,88,239, 0.8)',
+                        borderWidth: 2,
+                        fill: false,
+                        order: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Financial Year'
+                            // },
+                            // ticks: {
+                            //     fontSize: 30 // 设置 x 轴标签的字体大小
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Collected Tonnes'
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function (value, index, values) {
+                                    if (value >= 1000) {
+                                        return (value / 1000) + 'k';
+                                    } else {
+                                        return value;
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calculate trendline data based on collected data
+        function calculateTrendline(data) {
+            const trendlineData = [null]; // First point in trendline should be null
+            for (let i = 1; i < data.length; i++) {
+                trendlineData.push((data[i] + trendlineData[i - 1]) / 2);
+            }
+            return trendlineData;
+        }
+
+        // function calculateTrendline(data) {
+        //     const trendlineData = [null]; // First point in trendline should be null
+        //     for (let i = 1; i < data.length; i++) {
+        //         const value = (data[i] + trendlineData[i - 1]) / 2;
+        //         trendlineData.push(value >= 1000 ? (value / 1000) + 'k' : value);
+        //     }
+        //     return trendlineData;
+        // }
+
+
+        // Initial chart rendering
+        updateChart(councilNames[0]); // Render the chart for the first council by default
+
+        // Event listener for select change
+        councilSelect.addEventListener('change', () => {
+            const selectedCouncil = councilSelect.value;
+            updateChart(selectedCouncil);
+        });
+    </script>
+</body>
+</html>
