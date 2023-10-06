@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Page</title>
+    <style>
+        /* CSS styles for the page layout and elements */
+        body {
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            width: 30%;
+            background-color: rgba(132, 167, 199, 0.4);
+            padding: 20px;
+            float: left;
+            border-radius: 10px;
+        }
+
+        /* Styles for labels and headers in the sidebar */
+        #sidebar label,
+        #sidebar h2 {
+            color: black;
+        }
+        #sidebar h4 {
+            color: black;
+        }
+
+        /* Event list container styles */
+        #event-list {
+            width: 70%;
+            float: left;
+        }
+
+        /* Checkbox styles for free and not-free events */
+        #free-checkbox,
+        #not_free-checkbox {
+            transform: scale(1.5);
+        }
+
+        /* Styles for individual event cards */
+        .event-card {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            color: black;
+            border-radius: 10px;
+        }
+
+        /* Event title style */
+        .event-title {
+            font-weight: bold;
+        }
+
+        /* Event link styles */
+        .event-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        /* Event link hover effect */
+        .event-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Pagination container styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            color: black;
+            clear: both;
+        }
+
+        /* Pagination button styles */
+        .pagination-button {
+            background-color: #615eec;
+            color: white;
+            padding: 5px 15px;
+            border: 1px solid #007bff;
+            border-radius: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        /* Pagination button hover effect */
+        .pagination-button:hover {
+            background-color: #222;
+            color: white;
+        }
+
+        /* Page info text styles */
+        #page-info {
+            margin-top: 10px;
+        }
+
+        /* Styles for event details (start, end, and price) */
+        .event-start-end span,
+        .event-free span,
+        .event-description span {
+            font-weight: bold;
+        }
+
+        /* Container for event cards */
+        .event-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Apply Filter button styles */
+        .apply-filter-button {
+            background-color: #615eec;
+            color: white;
+            border: 1px solid #007bff;
+            margin-left: 40px;
+        }
+
+        /* Apply Filter button hover effect */
+        .apply-filter-button:hover {
+            background-color: #222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar section -->
+    <div id="sidebar">
+        <h2>&nbsp;&nbsp;Filter</h2>
+        <h4>&nbsp;&nbsp;Time Range:</h4>
+        <label for="start-date">&nbsp;&nbsp;Looking for events between:</label>
+        <input type="date" id="start-date">
+        <label for="end-date">&nbsp;&nbsp;and</label>
+        <input type="date" id="end-date">
+        <br>
+        <h4>&nbsp;&nbsp;Price:</h4>
+        <input type="radio" id="free-checkbox">
+        <label for="free-checkbox">&nbsp;&nbsp;Show Free Events Only</label><br>
+        <input type="radio" id="not_free-checkbox">
+        <label for="not_free-checkbox">&nbsp;&nbsp;Show Paid Events Only</label><br><br><br>
+        <!-- Apply Filter button -->
+        <button id="filter-button" class="apply-filter-button">Apply Filter</button>
+        <br><br>
+    </div>
+
+    <!-- Event list section -->
+    <div id="event-list">
+        <div class="event-container">
+        </div>
+        <!-- Pagination controls -->
+        <div class="pagination">
+            <div class="pagination-button" id="prev-page">  < Prev  </div>
+            <div id="page-info"></div>
+            <div class="pagination-button" id="next-page">  Next >  </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for handling events and filtering
+        var original_json = ajax_object;
+        var originalData = JSON.parse(JSON.stringify(original_json));
+
+        // Sort events by end date
+        original_json.event.sort(function(a, b) {
+            var dateA = new Date(a.end);
+            var dateB = new Date(b.end);
+            return dateA - dateB;
+        });
+
+        var currentPage = 1;
+        var eventsPerPage = 6;
+        var totalEvents = original_json.event.length;
+
+        var eventList = document.querySelector('.event-container');
+
+        function displayEvents() {
+            eventList.innerHTML = '';
+
+            original_json.event.sort(function(a, b) {
+                var dateA = new Date(a.end);
+                var dateB = new Date(b.end);
+                return dateA - dateB;
+            });
+
+            var startIndex = (currentPage - 1) * eventsPerPage;
+            var endIndex = Math.min(startIndex + eventsPerPage, totalEvents);
+
+            for (var i = startIndex; i < endIndex; i++) {
+                var event = original_json.event[i];
+
+                var eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+
+                var eventTitle = document.createElement('div');
+                eventTitle.className = 'event-title';
+                eventTitle.textContent = event.name;
+
+                var eventDescription = document.createElement('div');
+                eventDescription.className = 'event-description';
+                eventDescription.innerHTML = '<span>Description:</span> ' + event.description;
+
+                var eventStartEnd = document.createElement('div');
+                eventStartEnd.className = 'event-start-end';
+                eventStartEnd.innerHTML = '<span>Start:</span> ' + event.start + '<br><span>End:</span> ' + event.end;
+
+                var eventFree = document.createElement('div');
+                eventFree.className = 'event-free';
+                
+                if (event.is_free == "True") {
+                    eventFree.innerHTML = '<span>Price:</span> Free';
+                } else {
+                    eventFree.innerHTML = '<span>Price:</span> Paid';
+                }
+
+                var eventLink = document.createElement('a');
+                eventLink.className = 'event-link';
+                eventLink.href = event.url;
+                eventLink.textContent = 'View More Info';
+
+                eventCard.appendChild(eventTitle);
+                eventCard.appendChild(eventDescription);
+                eventCard.appendChild(eventStartEnd);
+                eventCard.appendChild(eventFree);
+                eventCard.appendChild(eventLink);
+
+                eventList.appendChild(eventCard);
+            }
+
+            updatePageInfo();
+        }
+
+        // Display initial events
+        displayEvents();
+
+        // Event handling for previous page button
+        document.getElementById('prev-page').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayEvents();
+                scrollToMiddle();
+            }
+        });
+
+        // Event handling for next page button
+        document.getElementById('next-page').addEventListener('click', function() {
+            var totalPages = Math.ceil(totalEvents / eventsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayEvents();
+                scrollToMiddle();
+            }
+        });
+
+        // Scroll to middle of the page
+        function scrollToMiddle() {
+            var windowHeight = window.innerHeight;
+            var middleScroll = windowHeight * 9 / 28;
+            window.scrollTo({
+                top: middleScroll,
+                behavior: 'smooth'
+            });
+        }
+
+        // Update page information
+        function updatePageInfo() {
+            var totalPages = Math.ceil(totalEvents / eventsPerPage);
+            var pageInfo = currentPage + ' / ' + totalPages;
+            document.getElementById('page-info').textContent = pageInfo;
+        }
+
+        var startDateInput = document.getElementById('start-date');
+        var endDateInput = document.getElementById('end-date');
+        var filterButton = document.getElementById('filter-button');
+
+        var freeCheckbox = document.getElementById('free-checkbox');
+        var notFreeCheckbox = document.getElementById('not_free-checkbox');
+
+        // Event handling for free checkbox
+        freeCheckbox.addEventListener('click', function() {
+            if (freeCheckbox.checked) {
+                notFreeCheckbox.checked = false;
+            }
+        });
+
+        // Event handling for not-free checkbox
+        notFreeCheckbox.addEventListener('click', function() {
+            if (notFreeCheckbox.checked) {
+                freeCheckbox.checked = false;
+            }
+        });
+
+        // Event handling for filter button
+        filterButton.addEventListener('click', function() {
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(endDateInput.value);
+
+            original_json = JSON.parse(JSON.stringify(originalData));
+
+            if (!startDateInput.value || !endDateInput.value) {
+                var filteredEvents = original_json.event;
+            } else {
+                var filteredEvents = original_json.event.filter(function(event) {
+                    var eventDateStart = new Date(event.start);
+                    var eventDateEnd = new Date(event.end);
+                    return eventDateEnd >= startDate && eventDateStart <= endDate;
+                });
+            }
+
+            var freeCheckbox = document.getElementById('free-checkbox');
+            var notfreeCheckbox = document.getElementById('not_free-checkbox');
+            var isFreeChecked = freeCheckbox.checked;
+            var isnotFreeChecked = notfreeCheckbox.checked;
+
+            if (!isFreeChecked || filteredEvents.length === 0) {
+                // No filter for free events, keep all events
+            } else {
+                filteredEvents = filteredEvents.filter(function(event) {
+                return event.is_free === "True";
+                });
+            }
+
+            if (!isnotFreeChecked || filteredEvents.length === 0) {
+                // No filter for paid events, keep all events
+            } else {
+                filteredEvents = filteredEvents.filter(function(event) {
+                    return event.is_free === "False";
+                });
+            }
+
+            original_json.event = filteredEvents;
+            totalEvents = filteredEvents.length;
+            currentPage = 1;
+            displayEvents();
+        });
+    </script>
+</body>
+</html>
