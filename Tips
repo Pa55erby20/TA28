@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Tips Generator</title>
+    <style>
+        body {
+            color: black;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 60px;
+            margin: 40px auto;
+            width: 900px; /* Fixed width */
+        }
+
+        button {
+            margin-top: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 30px;
+            padding-right: 30px;
+            font-size: 18px;
+        }
+
+        /* Style for tips */
+        .tip {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h3 {
+            font-size: 26px;
+        }
+
+        p {
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tip" id="tip">
+            <h3>Welcome to Random Tips Generator</h3>
+            <p>Click the button below to get a random tip.</p>
+        </div>
+        <button id="generateBtn">Generate Tip</button>
+    </div>
+    <script>
+        // Define your tips
+        const tips = [
+            {
+                title: "Two-Factor Authentication (2FA)",
+                description: "Make sure you enable 2FA on your devices and accounts to add an extra layer of security against unauthorized access."
+            },
+            {
+                title: "Data Backups",
+                description: "Regularly back up your important data to prevent loss. Remember to securely store these backups."
+            },
+            {
+                title: "Privacy Settings Check",
+                description: "Review and adjust the privacy settings on your devices and apps to control what data is shared."
+            },
+            {
+                title: "Responsible Application Permissions",
+                description: "Be cautious when granting permissions to mobile apps. Only grant necessary permissions."
+            },
+            {
+                title: "Electronic Repair",
+                description: "Support local electronic repair services that can fix common issues, such as broken screens, extending the life of your devices."
+            },
+            {
+                title: "Energy-Efficient Charging",
+                description: "Remember to unplug chargers and power adapters when not in use to reduce standby power consumption."
+            },
+            {
+                title: "Exchange Programs",
+                description: "Take advantage of manufacturer or retailer exchange programs that allow you to exchange old devices for discounts on new ones."
+            },
+            {
+                title: "Data Encryption",
+                description: "Consider using encryption tools for sensitive data. Encrypted data is less susceptible to data breaches."
+            },
+            {
+                title: "Extended Warranties",
+                description: "Consider extended warranties for your electronic devices to prolong their useful life. Some warranties cover repairs and replacements."
+            },
+            {
+                title: "Recycle Beyond Electronics",
+                description: "Recycle other items like printer cartridges and at designated collection points."
+            }
+        ];
+
+        // Function to generate a random tip
+        function generateRandomTip() {
+            const randomIndex = Math.floor(Math.random() * tips.length);
+            const tipElement = document.getElementById("tip");
+            tipElement.innerHTML = `
+                <h3>${tips[randomIndex].title}</h3>
+                <p>${tips[randomIndex].description}</p>
+            `;
+        }
+
+        // Event listener for the button click
+        const generateButton = document.getElementById("generateBtn");
+        generateButton.addEventListener("click", generateRandomTip);
+
+        // Initial tip generation
+        generateRandomTip();
+    </script>
+</body>
+</html>
