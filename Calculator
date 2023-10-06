@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Waste Calculator</title>
+    <style>
+        body {
+            color: black;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap; /* Wrap items to the next row if there's not enough space */
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        label, p {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .device-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(132, 167, 199, 0.4);
+            padding: 60px;
+            border-radius: 50px;
+        }
+
+        .device-label img {
+            width: 40px;
+            margin-bottom: 10px;
+        }
+
+        #calculateButtonContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%; /* Ensure the button takes full width */
+        }
+
+
+        /* Style for the input field */
+        .number-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .number-input button {
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .number-input input[type="number"]::-webkit-inner-spin-button,
+        .number-input input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .number-input input[type="number"] {
+            width: 60px; /* Adjust the width as needed */
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+        
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+
+        #results h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .result-container {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .result-label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .result-value {
+            margin-top: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        <form id="ewasteCalculator">
+            <!-- Device containers in the same row -->
+            <div class="device-container">
+                <img src="https://live.staticflickr.com/65535/53228108993_05b0d3668e_t.jpg" alt="0">
+                <label for="mobilePhones">Mobile Phones:</label>
+                <div class="number-input">
+                    <button type="button" onclick="decrementValue('mobilePhones')">-</button>
+                    <input type="number" id="mobilePhones" name="mobilePhones" min="0" value="0">
+                    <button type="button" onclick="incrementValue('mobilePhones')">+</button>
+                </div>
+            </div>
+            
+            <div class="device-container">
+                <img src="https://live.staticflickr.com/65535/53227800986_5ffca25e8a_t.jpg" alt="0">
+                <label for="tablets">Tablets:</label>
+                <div class="number-input">
+                    <button type="button" onclick="decrementValue('tablets')">-</button>
+                    <input type="number" id="tablets" name="tablets" min="0" value="0">
+                    <button type="button" onclick="incrementValue('tablets')">+</button>
+                </div>
+            </div>
+            
+            <div class="device-container">
+                <img src="https://live.staticflickr.com/65535/53228178034_9d957dfea0_t.jpg" alt="Icon0">
+                <label for="laptops">Laptops:</label>
+                <div class="number-input">
+                    <button type="button" onclick="decrementValue('laptops')">-</button>
+                    <input type="number" id="laptops" name="laptops" min="0" value="0">
+                    <button type="button" onclick="incrementValue('laptops')">+</button>
+                </div>
+            </div>
+            
+            <!-- Separate row for the Calculate button -->
+            <div id="calculateButtonContainer"><br>
+                <button id="calculateButton" type="button">Calculate</button>
+            </div>
+        </form>
+
+        <div id="results" style="display: none;">
+            <h2>Calculation completed!</h2>
+            <br>
+            <div class="result-row">
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53228419405_19301ae925_t.jpg" alt="P">
+                    <span class="result-label">Total Plastic in Device:</span>
+                    <span class="result-value" id="plasticResult">0 g</span>
+                </div>
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53227045652_1555c25be6_t.jpg" alt="A">
+                    <span class="result-label">Total Aluminum in Device:</span>
+                    <span class="result-value" id="aluminumResult">0 g</span>
+                </div>
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53227917741_b502d5544b_t.jpg" alt="C">
+                    <span class="result-label">Total Copper in Device:</span>
+                    <span class="result-value" id="copperResult">0 g</span>
+                </div>
+            </div>
+            <div><br></div>
+            <div class="result-row">
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53228419375_396eaca218_t.jpg" alt="A">
+                    <span class="result-label">Total E-Waste Collected:</span>
+                    <span class="result-value" id="ewasteResult">0 kg</span>
+                </div>
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53227045617_b6ceb31320_t.jpg" alt="A">
+                    <span class="result-label">Total CO2 Savings:</span>
+                    <span class="result-value" id="co2Result">0 kg CO2</span>
+                </div>
+                <div class="result-container">
+                    <img src="https://live.staticflickr.com/65535/53228295254_d1fe00d3bd_t.jpg" alt="A">
+                    <span class="result-label">CO2 Savings Equivalent:</span>
+                    <span class="result-value" id="equivalentResult">0 km drive</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // JavaScript functions for incrementing and decrementing values
+        function incrementValue(id) {
+            const input = document.getElementById(id);
+            input.value = parseInt(input.value) + 1;
+        }
+    
+        function decrementValue(id) {
+            const input = document.getElementById(id);
+            const currentValue = parseInt(input.value);
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+            }
+        }
+    
+        document.getElementById("calculateButton").addEventListener("click", function() {
+            // Calculate and display results here
+            const mobilePhones = parseFloat(document.getElementById("mobilePhones").value) || 0;
+            const tablets = parseFloat(document.getElementById("tablets").value) || 0;
+            const laptops = parseFloat(document.getElementById("laptops").value) || 0;
+    
+            const mobilePhoneWeight = 0.17;  // kg
+            const tabletWeight = 0.8;       // kg
+            const laptopWeight = 2.9;       // kg
+            const mobilePhoneCO2Savings = 0.18;  // kg CO2 saved per mobile phone
+            const tabletCO2Savings = 0.84;       // kg CO2 saved per tablet
+            const laptopCO2Savings = 3.21;       // kg CO2 saved per laptop
+    
+            const plasticRecycledMobile = 40 * mobilePhones;  // g
+            const aluminumRecycledMobile = 50 * mobilePhones; // g
+            const copperRecycledMobile = 15 * mobilePhones;   // g
+
+            const plasticRecycledTablet = 400 * tablets;  // g
+            const aluminumRecycledTablet = 500 * tablets; // g
+            const copperRecycledTablet = 20 * tablets;   // g
+
+            const plasticRecycledLaptop = 50 * laptops;  // g
+            const aluminumRecycledLaptop = 700 * laptops; // g
+            const copperRecycledLaptop = 30 * laptops;   // g
+
+            const totalPlasticRecycled = plasticRecycledMobile + plasticRecycledTablet + plasticRecycledLaptop;
+            const totalAluminumRecycled = aluminumRecycledMobile + aluminumRecycledTablet + aluminumRecycledLaptop;
+            const totalCopperRecycled = copperRecycledMobile + copperRecycledTablet + copperRecycledLaptop;
+
+            const totalEwaste = mobilePhones * mobilePhoneWeight + tablets * tabletWeight + laptops * laptopWeight;
+            const totalCO2Savings = mobilePhones * mobilePhoneCO2Savings + tablets * tabletCO2Savings + laptops * laptopCO2Savings;
+            
+            // Calculate equivalent distance in kilometers
+            const emissionsPerKm = 3; // kg/km
+            const equivalentDistance = totalCO2Savings / emissionsPerKm;
+
+            // Update the results containers
+            document.getElementById("plasticResult").textContent = `${totalPlasticRecycled} g`;
+            document.getElementById("aluminumResult").textContent = `${totalAluminumRecycled} g`;
+            document.getElementById("copperResult").textContent = `${totalCopperRecycled} g`;
+            document.getElementById("ewasteResult").textContent = `${totalEwaste.toFixed(2)} kg`;
+            document.getElementById("co2Result").textContent = `${totalCO2Savings.toFixed(2)} kg CO2`;
+            document.getElementById("equivalentResult").textContent = `${equivalentDistance.toFixed(2)} km drive`;
+
+            // Show the results section
+            document.getElementById("results").style.display = "block";
+        });
+    </script>
+</body>
+</html>
