@@ -5,34 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
 <style>
+    /* Base styles for the entire body */
     body {
         color: black;
-        font-family: 'Poppins', sans-serif; /* Change font to Poppins or a similar web font */
+        font-family: 'Poppins', sans-serif;
     }
-    
+
+    /* Styling for the main heading */
     h1 {
         color: black;
         text-align: center;
     }
 
-    /* You can also specify styles for specific elements if needed */
+    /* Styling for secondary headings and paragraphs */
     h2, p {
         color: black;
     }
+    
+    /* Increase the size of radio buttons */
+    #question-form input[type="radio"] {
+        transform: scale(1.5); /* Increase the size by adjusting the scale factor */
+    }
 
+    /* Styling for correct answers */
     .correct {
         color: green;
         font-weight: bold;
     }
 
+    /* Styling for incorrect answers */
     .incorrect {
         color: red;
         font-weight: bold;
     }
+
+    /* Styling for the image on the start page */
     #start-page img {
         display: block;
         margin: auto;
     }
+
+    /* Styling for the progress bar container */
     .progress-bar-container {
         width: 100%;
         background-color: #ddd;
@@ -41,6 +54,8 @@
         border-radius: 10px;
         overflow: hidden;
     }
+
+    /* Styling for the timer element */
     #timer {
         margin-left: 20px;
         width: 100px;
@@ -52,8 +67,9 @@
         align-items: center;
         font-size: 14px;
         font-weight: bold;
-    }   
+    }
 
+    /* Styling for the progress bar */
     .progress-bar {
         width: 0;
         height: 100%;
@@ -61,106 +77,128 @@
         transition: width 0.5s;
     }
 
-    /* Style for the questions */
+    /* Styling for question text on the question page */
     #question-page h2#question-text {
-        font-family: 'Poppins', sans-serif; /* Change font to Poppins or a similar web font */
-        font-size: 20px; /* Adjust the font size here */
+        font-family: 'Poppins', sans-serif;
+        font-size: 20px;
     }
 
+    /* Styling for labels in the question page */
     #question-page label {
-        font-size: 18px; /* Adjust the font size for options here */
+        font-size: 18px;
     }
 
+    /* Styling for buttons in the question page */
     #question-page button {
         margin-top: 10px;
-        margin-right: 10px; /* Add margin before the buttons */
+        margin-right: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
-        padding-left: 30px; /* Adjust the left padding here */
-        padding-right: 30px; /* Adjust the right padding here */
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
+    /* Styling for the button container in the question page */
     #question-page .button-container {
         display: flex;
         justify-content: center;
     }
-    
-    /* Adjust the width of buttons to 50% */
+
+    /* Styling for buttons in the question page */
     #question-page button {
         width: 200px;
     }
 
-    /* Add margin-right to create space between buttons */
-    #question-page button + button {
-        margin-left: 20px; /* Adjust the space between buttons here */
-    }
-    
-    /* Adjust the width of the "Start" and "Retry Quiz" buttons to 100px */
+    /* Styling for buttons in various pages */
     #start-page button, #review-page button, #result-page button {
-        width: 200px;
-        height: 70px; /* Adjust the height if needed */
-        margin: auto; /* Center both horizontally and vertically */
-        display: block; /* Ensure block-level rendering */
+        width: 300px;
+        height: 50px;
+        margin: auto;
+        display: block;
+        line-height: 15px;
+        text-align: center;
     }
 
-    /* Style for question number display */
+    /* Styling for the question number text */
     #question-number {
         font-size: 16px;
         font-weight: bold;
     }
+
+    /* Styling for the question text with maximum width and word wrap */
     #question-text {
         max-width: 800px;
         word-wrap: break-word;
-    }    
+    }
+    
+    /* Styling for the result message */
+    #result-message {
+        text-align: center;
+    }
+
 </style>
 
 </head>
 <body>
     <div id="quiz-container">
+        <!-- Quiz start page -->
         <div id="start-page">
-            <h1>Data Privacy and E-Waste Quiz!</h1>
-            <img src="https://toonsquad.world/wp-content/uploads/2023/09/Website-Logos-2.png" alt="Toon Squad Logo">
+            <img src="https://toonsquad.world/wp-content/uploads/2023/09/Website-Logos-2.png" alt="Toon Squad Logo" style="width: 450px; height: 450px;">
+            <!-- Start button -->
             <button onclick="startQuiz()">Start</button>
         </div>
+        
+        <!-- Question page -->
         <div id="question-page" style="display: none;">
             <div style="display: flex; justify-content: space-between;">
                 <div>
                     <p id="question-number"></p>
                     <h2 id="question-text"></h2>
                 </div>
+                <!-- Timer -->
                 <div id="timer">Time</div>
             </div>
             <form id="question-form">
             </form>
+            <br>
+            <!-- Previous or next question button -->
             <div class="button-container">
-                <button type="button" onclick="previousQuestion()">Previous</button>
-                <button type="button" onclick="nextQuestion()">Next</button>
+                <button type="button" onclick="previousQuestion()">  &lt; Prev  </button>
+                <button type="button" onclick="nextQuestion()">  Next &gt;  </button>
             </div>
         </div>
+        
+        <!-- Results page -->
         <div id="result-page" style="display: none;">
             <h2>Quiz Results:</h2>
-            <p id="quiz-result"></p>
-            <button onclick="reviewAnswers()">Check</button>
+            <div id="result-container">
+                <div id="quiz-result"></div>
+                <button id="retry-button" onclick="retryQuiz()">Retry Quiz</button>
+                <br>
+                <h3 id="result-message" style="text-align: center;"></h3>
+                <button id="redirect-button" onclick="redirectToGame()">Get Informed!</button>
+            </div>
         </div>
-        <div id="review-page" style="display: none;">
-            <h2>Review Answers:</h2>
-            <div id="review-answers"></div>
-            <button onclick="retryQuiz()">Retry</button>
-        </div>
+        
+        <br>
+        
+        <!-- Progress Bar -->
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
+        
     </div>
 
-
     <script>
-        let currentQuestion = 0;
-        let score = 0;
-        let reviewMode = false;
-        let selectedAnswers = [];
-        let timerInterval;
-        let timerSeconds = 0;
-        
+        // Variables to track quiz state
+        let currentQuestion = 0;  // Current question index
+        let score = 0;            // User's score
+        let reviewMode = false;   // Flag to indicate if the quiz is in review mode
+        let selectedAnswers = []; // Array to store user's selected answers
+        let timerInterval;        // Timer interval for tracking time
+        let timerSeconds = 0;     // Timer for counting seconds
+    
+        // Function to start the quiz timer
         function startTimer() {
             clearInterval(timerInterval);
             timerSeconds = 0;
@@ -170,60 +208,35 @@
                 document.getElementById('timer').textContent = `${Math.floor(timerSeconds / 60)}:${timerSeconds % 60}`;
             }, 1000);
         }
-        
+    
+        // Array of quiz questions and their answers
         const questions = [
+            // Question 1
             {
-                question: "How does responsible e-waste disposal relate to data privacy?",
+                question: "Recycling Choices: Imagine you have an old laptop that no longer works. What is the most responsible action to take regarding its disposal?",
                 options: [
-                    "a) It has no impact on data privacy.",
-                    "b) It ensures secure data erasure, protecting personal information.",
-                    "c) It leads to more data breaches.",
-                    "d) It only affects corporate data, not personal data."
+                    " a) Throw it in the regular trash.",
+                    " b) Donate it to a local charity.",
+                    " c) Sell it online.",
+                    " d) Take it to a certified e-waste recycling center."
                 ],
-                answer: "b"
+                answer: "d" // Correct answer
             },
+            // Question 2
             {
                 question: "Data Security Concerns: You're upgrading your smartphone to the latest model. What should you do before getting rid of your old phone?",
                 options: [
-                    "a) Nothing, it's fine to sell or give away as-is.",
-                    "b) Delete all your apps and files.",
-                    "c) Perform a factory reset to erase all data.",
-                    "d) Remove the SIM card."
+                    " a) Nothing, it's fine to sell or give away as-is.",
+                    " b) Delete all your apps and files.",
+                    " c) Perform a factory reset to erase all data.",
+                    " d) Remove the SIM card."
                 ],
-                answer: "c"
+                answer: "c" // Correct answer
             },
-            {
-                question: "Why is data privacy important when disposing of electronic devices?",
-                options: [
-                    "a) To sell personal data for profit",
-                    "b) To prevent data breaches and identity theft",
-                    "c) To create more storage space on the device",
-                    "d) To reduce the cost of recycling"
-                ],
-                answer: "b"
-            },
-            {
-                question: "Why is e-waste disposal a growing concern?",
-                options: [
-                    "a) It leads to excessive landfill waste.",
-                    "b) It poses environmental risks.",
-                    "c) It increases data privacy concerns.",
-                    "d) All of the above"
-                ],
-                answer: "d"
-            },
-            {
-                question: "Reusing old electronic devices can mitigate which environmental issue while also decreasing the demand for new manufacturing processes?",
-                options: [
-                    "a) Ozone depletion",
-                    "b) Deforestation",
-                    "c) E-waste",
-                    "d) Ocean acidification"
-                ],
-                answer: "c"
-            }            
+            // ... (more questions) ...
         ];
-
+    
+        // Function to start the quiz
         function startQuiz() {
             currentQuestion = 0;
             score = 0;
@@ -234,13 +247,14 @@
             document.getElementById('question-page').style.display = 'block';
             startTimer();
         }
-
+    
+        // Function to display the current question
         function showQuestion() {
             const questionElement = document.getElementById('question-page');
             const question = questions[currentQuestion];
             document.getElementById('question-number').textContent = `Question ${currentQuestion + 1} / ${questions.length}:`;
             questionElement.querySelector('h2').textContent = question.question;
-
+    
             const form = questionElement.querySelector('#question-form');
             form.innerHTML = '';
             question.options.forEach((option, index) => {
@@ -249,8 +263,14 @@
                 radio.name = 'answer';
                 radio.value = String.fromCharCode(97 + index); // 'a', 'b', 'c', 'd'
                 radio.checked = selectedAnswers[currentQuestion] === radio.value;
+                
+                // Create a label for the option and add a click event listener
                 const label = document.createElement('label');
                 label.textContent = option;
+                label.addEventListener('click', () => {
+                    handleLabelClick(index);
+                });
+    
                 form.appendChild(radio);
                 form.appendChild(label);
                 form.appendChild(document.createElement('br'));
@@ -259,17 +279,24 @@
                 correctAnswer.style.display = reviewMode ? 'block' : 'none';
                 form.appendChild(correctAnswer);
             });
-
+    
             updateProgressBar();
         }
-
+    
+        // Function to handle clicks on labels and select the corresponding radio button
+        function handleLabelClick(labelIndex) {
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons[labelIndex].checked = true;
+        }
+    
+        // Function to move to the next question
         function nextQuestion() {
             const selectedAnswer = document.querySelector('input[name="answer"]:checked');
             if (!selectedAnswer && !reviewMode) {
                 alert('Please select an answer before moving on.');
                 return;
             }
-
+    
             if (!reviewMode) {
                 selectedAnswers[currentQuestion] = selectedAnswer.value;
                 const currentQuestionData = questions[currentQuestion];
@@ -277,7 +304,7 @@
                     score++;
                 }
             }
-
+    
             currentQuestion++;
             if (currentQuestion < questions.length) {
                 showQuestion();
@@ -289,7 +316,8 @@
                 updateProgressBar(100);
             }
         }
-
+    
+        // Function to move to the previous question
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
@@ -300,72 +328,92 @@
             }
         }
 
+        // Function to display the quiz result
         function showResult() {
             document.getElementById('question-page').style.display = 'none';
             document.getElementById('result-page').style.display = 'block';
-            const resultText = `Your score: ${score} out of ${questions.length}`;
-            document.getElementById('quiz-result').textContent = resultText;
+        
+            // Clear previous results
+            const quizResult = document.getElementById('quiz-result');
+            quizResult.innerHTML = '';
+        
+            // Display the score (bolded)
+            const resultText = `Your score: <strong>${score} out of ${questions.length}</strong>`;
+            const scoreElement = document.createElement('p');
+            scoreElement.innerHTML = resultText;
+            quizResult.appendChild(scoreElement);
+        
+            // Display question, options, user's answer, and correct answer for each question
+            const resultDetails = document.createElement('div');
+            resultDetails.classList.add('result-details');
+            questions.forEach((question, index) => {
+                const questionContainer = document.createElement('div');
+                questionContainer.classList.add('question-container');
+        
+                const questionText = document.createElement('p');
+                questionText.innerHTML = `Question ${index + 1}: ${question.question}`;
+                questionContainer.appendChild(questionText);
+        
+                const optionsText = document.createElement('p');
+                optionsText.innerHTML = `${question.options.join('<br>')}`;
+                questionContainer.appendChild(optionsText);
+        
+                const userAnswerText = document.createElement('p');
+                const isCorrect = selectedAnswers[index] === question.answer;
+                userAnswerText.innerHTML = `Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${selectedAnswers[index]}</span>`;
+                questionContainer.appendChild(userAnswerText);
+        
+                const correctAnswerText = document.createElement('p');
+                correctAnswerText.innerHTML = `Correct Answer: <span class="correct">${question.options[question.answer.charCodeAt(0) - 97]}</span>`;
+                questionContainer.appendChild(correctAnswerText);
+        
+                resultDetails.appendChild(questionContainer);
+            });
+        
+            quizResult.appendChild(resultDetails);
+        
+            // Display message based on the score below the progress bar
+            const resultMessage = document.getElementById('result-message');
+            if ((score / questions.length) * 100 < 61) {
+                resultMessage.textContent = "Oops! It looks like your score is lower than we'd hope. Don't worry, though, we're here to help you avoid those data breaches!";
+            } else {
+                resultMessage.textContent = "Great job! You're on the right track to becoming a data security pro. Get ready to take the next steps and protect your info while recycling old gadgets!";
+            }
+        
             reviewMode = true;
         }
 
-        function reviewAnswers() {
-            currentQuestion = 0;
-            document.getElementById('result-page').style.display = 'none';
-            document.getElementById('review-page').style.display = 'block';
-            displayReviewAnswers();
-        }
-
-        function displayReviewAnswers() {
-            const reviewAnswersElement = document.getElementById('review-answers');
-            reviewAnswersElement.innerHTML = '';
-
-            questions.forEach((question, index) => {
-                const reviewAnswer = document.createElement('div');
-                reviewAnswer.classList.add('question-review');
-
-                const questionText = document.createElement('p');
-                questionText.textContent = `Question ${index + 1} / ${questions.length}: ${question.question}`;
-                reviewAnswer.appendChild(questionText);
-
-                const userAnswer = selectedAnswers[index];
-                const correctAnswer = question.answer;
-                const userIsCorrect = userAnswer === correctAnswer;
-
-                const userAnswerText = document.createElement('p');
-                userAnswerText.textContent = `Your Answer: ${question.options[userAnswer.charCodeAt(0) - 97]}`;
-                if (userIsCorrect) {
-                    userAnswerText.classList.add('correct');
-                } else {
-                    userAnswerText.classList.add('incorrect');
-                }
-                reviewAnswer.appendChild(userAnswerText);
-
-                const correctAnswerText = document.createElement('p');
-                correctAnswerText.innerHTML = `Correct Answer: <strong>${question.options[correctAnswer.charCodeAt(0) - 97]}</strong>`;
-                reviewAnswer.appendChild(correctAnswerText);
-
-                reviewAnswersElement.appendChild(reviewAnswer);
-            });
-        }
-
+        // Function to retry the quiz
         function retryQuiz() {
             currentQuestion = 0;
             score = 0;
             reviewMode = false;
             selectedAnswers = [];
-            showQuestion();
             document.getElementById('result-page').style.display = 'none';
-            document.getElementById('review-page').style.display = 'none';
-            document.getElementById('question-page').style.display = 'block';
-            updateProgressBar(0);
+            document.getElementById('question-page').style.display = 'none';
+            document.getElementById('start-page').style.display = 'block'; // Show the start page
+            startTimer();  // Reset the timer when retrying the quiz
         }
 
+        // Function to update the progress bar
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
             const percentComplete = (currentQuestion / questions.length) * 100;
             progressBar.style.width = `${percentComplete}%`;
         }
 
+        // Function to redirect to different URLs based on the user's score
+        function redirectToGame() {
+            if ((score / questions.length) * 100 < 61) {
+                window.location.href = 'https://toonsquad.world/index.php/info/';
+            } else {
+                window.location.href = 'https://toonsquad.world/index.php/safeguard-your-data/';
+            }
+        }
+
     </script>
+
+    
 </body>
 </html>
+
