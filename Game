@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game</title>
+  <style>
+   
+    #gameArea {
+      width: 800px;
+      height: 600px;
+      border: 1px solid black;
+      position: relative;
+      overflow: hidden;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    
+    #startButton {
+        width: 300px;
+        height: 50px;
+        margin: auto;
+        display: block;
+        line-height: 15px;
+        text-align: center;
+    }
+    
+    .item {
+      width: 70px;
+      height: 70px;
+      position: absolute;
+      background-size: cover;
+    }
+    
+    h6 {
+        text-align: center;
+    }
+   
+    .item.newspaper {
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t1.png');
+    }
+  
+    .item.cup {
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t2.png');
+    }
+  
+    .item.phone {
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t3.png');
+    }
+  
+    .item.tablet {
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t4.png');
+    }
+  
+    .item.laptop {
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t5.png');
+      background-position: center;  
+      background-size: contain;  
+      background-repeat: no-repeat;  
+    }
+ 
+    body, h1, p {
+      color: black;  
+    }    
+
+    #trashCan {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      bottom: 0;
+      background-image: url('https://toonsquad.world/wp-content/uploads/2023/09/t6.png');
+      background-size: cover;
+    }
+    #startButton {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id='gameArea'>
+    <div id='trashCan'></div>
+  </div>
+  <br>
+  <button id="startButton">Start</button>
+  <h6>Score: <span id='score'>0</span></h6>
+  
+  <script>
+    let score = 0;
+    const gameArea = document.getElementById('gameArea');
+    const trashCan = document.getElementById('trashCan');
+    const scoreElement = document.getElementById('score');
+    const startButton = document.getElementById('startButton');
+    let gameInterval;
+    let itemInterval;
+
+    startButton.addEventListener('click', () => {
+      startButton.disabled = true;
+      startGame();
+    });
+
+    function startGame() {
+      gameInterval = setTimeout(() => {
+        alert('Game Over! Your score is: ' + score);
+        location.reload();
+      }, 30000);
+
+      itemInterval = setInterval(() => {
+        createItem();
+      }, 2000);
+    }
+
+    function createItem() {
+      const itemTypes = ['Newspaper', 'Cup', 'Phone', 'Tablet', 'Laptop'];
+      const randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+      const item = document.createElement('div');
+      item.className = 'item ' + randomType.toLowerCase();
+      item.style.left = Math.random() * (gameArea.offsetWidth - 70) + 'px';
+      item.style.top = '0px';
+      gameArea.appendChild(item);
+
+      let position = 0;
+      const fallInterval = setInterval(() => {
+        if (position >= gameArea.offsetHeight) {
+          clearInterval(fallInterval);
+          gameArea.removeChild(item);
+        } else {
+          position += 5;
+          item.style.top = position + 'px';
+
+          if (isColliding(trashCan, item)) {
+            if (randomType === 'Phone' || randomType === 'Tablet' || randomType === 'Laptop') {
+              score++;
+              scoreElement.textContent = score;
+            }
+            clearInterval(fallInterval);
+            gameArea.removeChild(item);
+          }
+        }
+      }, 20);
+    }
+
+    function isColliding(div1, div2) {
+      const rect1 = div1.getBoundingClientRect();
+      const rect2 = div2.getBoundingClientRect();
+
+      return !(rect1.right < rect2.left || 
+               rect1.left > rect2.right || 
+               rect1.bottom < rect2.top || 
+               rect1.top > rect2.bottom);
+    }
+
+    gameArea.addEventListener('mousemove', (e) => {
+      const x = e.clientX - gameArea.getBoundingClientRect().left - trashCan.offsetWidth / 2;
+      trashCan.style.left = x + 'px';
+    });
+  </script>
+</body>
+</html>
