@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dropdown Content Example</title>
+    <style>
+        /* Styling for the content div */
+        #content {
+            display: none; /* Initially hide the content */
+            margin-top: 10px;
+            padding: 10px;
+            color: black; /* Set the text color to black */
+        }
+
+        /* Styling for the container that holds video and instructions */
+        #video-instructions-container {
+            display: none; /* Initially hide the container */
+            margin-top: 10px;
+            overflow: hidden; /* Ensure content doesn't overflow */
+        }
+
+        /* Styling for the video iframe */
+        #video {
+            width: 50%; /* Set the width of the video container */
+            float: left; /* Float the video to the left */
+        }
+
+        /* Styling for the instructions */
+        #instructions {
+            width: 50%; /* Set the width of the instructions */
+            float: left; /* Float the instructions to the left */
+            padding-right: 10px !important;
+        }
+
+        /* Styling for the dropdown list */
+        #dropdown {
+            display: inline-block; /* Display the dropdown as inline-block */
+            width: 500px; /* Adjust the width as needed */
+            height: 50px;
+            margin-left: 190px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        /* Styling for the button */
+        #showcontentButton {
+            font-size: 16px;
+            padding: 10px 30px;
+            margin-left: 85px; /* Add margin to separate the dropdown and button */
+            background-color: #615eec;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        #showcontentButton:hover {
+            background-color: #222;
+        }
+
+        /* Styling for the response buttons */
+        .response-button {
+            display: none; /* Initially hide the response buttons */
+            font-size: 16px;
+            padding: 10px 30px;
+            margin: 10px; /* Add some margin for spacing */
+            background-color: #615eec;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        .response-button:hover {
+            background-color: #222;
+        }
+    </style>
+    <script>
+        // Function to display content based on the selected option
+        function showContent() {
+            var dropdown = document.getElementById("dropdown");
+            var content = document.getElementById("content");
+            var videoInstructionsContainer = document.getElementById("video-instructions-container");
+            var video = document.getElementById("video-iframe"); // Updated video ID
+            var instructions = document.getElementById("instructions");
+            var safeguardQuestion = document.getElementById("safeguard-question"); // Question and buttons
+            var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+
+            // Define different content and video URLs for each option
+            var contentMap = {
+                "option1": `
+                    <div style="float:left; width:50%;">
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1.1: Back Up Data</u></strong></p>
+                    <p style="margin: 0; padding: 0;">Option 1: Cloud Back Up
+                        <ul style="margin: 0;">
+                            <li>Settings > [Name] > iCloud > Enable iCloud Back Up > Back Up</li>
+                        </ul>
+                    <p style="margin: 0; padding: 0;">Option 2: Computer Back Up (iTunes)
+                        <ul style="margin: 0;">
+                            <li>Connect to computer > iPhone icon > This Computer > Encrypt</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Turn Off Find My iPhone</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > [Name] > Find my iPhone > Turn off > Enter credentials</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 3: Factory Reset</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > General > Reset > Erase All Content and Setting > Back Up Then Erase > Enter Passcode > Erase iPhone</li>
+                        </ul>
+                    </p>
+
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/p7tG_Rwjztc" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `,
+                "option2": `
+                    <div style="float:left; width:50%;">
+                        <p></p>
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1: Back Up Data</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Option 1: Mac Time Machine</li>
+                        </ul>
+                        <ul style="margin: 0;">
+                            <li>Option 2: External Hard Drive</li>
+                        </ul></p>
+                        
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Software Update</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Apple logo > About This Mac > Software Update</li>
+                        </ul></p>
+
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 3: Erase All Content and Settings</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Apple logo > System Preferences > Erase All Content all Settings > Enter Passcode > Erase All Content and Settings</li>
+                        </ul></p>
+                        
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/JPToPVvs3_I?si=L72FhGfImHjPSy9Z" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `,
+
+                "option3": `
+                    <div style="float:left; width:50%;">
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1.1: Back Up Data</u></strong></p>
+                    <p style="margin: 0; padding: 0;">Option 1: Cloud Back Up
+                        <ul style="margin: 0;">
+                            <li>Settings > [Name] > iCloud > Enable iCloud Back Up > Back Up</li>
+                        </ul>
+                    <p style="margin: 0; padding: 0;">Option 2: Computer Back Up (iTunes)
+                        <ul style="margin: 0;">
+                            <li>Connect to computer > iPad icon > This Computer > Encrypt</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Turn Off Find My iPad</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > [Name] > Find my iPad > Turn off > Enter credentials</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 3: Factory Reset</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > General > Reset > Erase All Content and Setting > Back Up Then Erase > Enter Passcode > Erase iPad</li>
+                        </ul>
+                    </p>
+
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/BBQ2mWojRiI?si=CveiDDu-qfoyraJt" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `,
+                "option4": `
+                    <div style="float:left; width:50%;">
+                        <h1></h1>
+                        <br>
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1: Back Up Data with Google Drive</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > Accounts and backup > Back up with Google Drive > Back Up Now</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Factory Data Reset</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > General management > Reset > Factory data reset > Reset > Enter PIN > Done > Delete all</li>
+                        </ul>
+                    </p>
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/W3oDhUQqeb4?si=M4PIdEG1PKB9F-NN" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `,
+                "option5": `
+                    <div style="float:left; width:50%;">
+                        <h1></h1>
+                        <br>
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1: Back Up Data</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>External Hard Drive</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Reset Windows</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Right click > Settings > Recovery > Reset this PC > Remove everything > Local reinstall > Next > Reset</li>
+                        </ul>
+                    </p>
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/VrgmsDlKoxQ?si=Os-RnMxG-iVk6CQl" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `,
+                "option6": `
+                    <div style="float:left; width:50%;">
+                        <h1></h1>
+                        <br>
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 1: Back Up Data with Google Drive</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > Accounts and backup > Back up with Google Drive > Back Up Now</li>
+                        </ul>
+                    </p>
+                    
+                        <p style="margin: 0; padding: 0;"><strong><u>Step 2: Factory Data Reset</u></strong></p>
+                        <ul style="margin: 0;">
+                            <li>Settings > General management > Reset > Factory data reset > Reset > Enter PIN > Done > Delete all</li>
+                        </ul>
+                    </p>
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <!-- YouTube video iframe -->
+                        <iframe id="video-iframe" width="560" height="315" src="https://www.youtube.com/embed/I9dEbuVE_KE?si=iI0CBH4Bc8Yhn58L" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `
+            };
+
+            // Display the selected content, video, and container
+            content.style.display = "block";
+            videoInstructionsContainer.style.display = "block";
+            content.innerHTML = contentMap[selectedOption];
+            instructions.innerHTML = ""; // Clear the instructions as they are now part of the content
+
+            // Show the response buttons
+            var responseButtons = document.getElementsByClassName("response-button");
+            for (var i = 0; i < responseButtons.length; i++) {
+                responseButtons[i].style.display = "block";
+            }
+
+            // Show the safeguard question and buttons
+            safeguardQuestion.style.display = "block";
+        }
+
+        // Function to show content when the "Show Content" button is clicked
+        function showContentButton() {
+            showContent(); // Call the showContent function to display the content
+        }
+
+        // Function to handle user response (Yes or No)
+        function handleResponse(response) {
+            // You can implement your logic here based on the user's response
+            if (response === "yes") {
+                // Handle 'Yes' response
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Dropdown menu and button in the same row -->
+    <div>
+        <select id="dropdown">
+            <option value="option1">iPhone</option>
+            <option value="option2">MacBook</option>
+            <option value="option3">iPad</option>
+            <option value="option4">Android Phone</option>
+            <option value="option5">Windows 11</option>
+            <option value="option6">Android Tablet</option>
+        </select>
+        <button id="showcontentButton" onclick="showContentButton()">Backup & Erase</button>
+    </div>
+    <br>
+    <!-- Content div that will display based on the selected option -->
+    <div id="content"></div>
+
+    <br>
+
+    <!-- Container for video and instructions -->
+    <div id="video-instructions-container">
+        <!-- Instructions (if needed) -->
+        <div id="instructions"></div>
+    </div>
+
+    <!-- Break before the question -->
+    <br>
+
+    <!-- Question and buttons initially hidden -->
+    <div id="safeguard-question" style="display: none; text-align: center;">
+        <h4 style="color: black;"><br>
+        <div style="display: flex; justify-content: center;"> <!-- Use flexbox to horizontally align buttons -->
+            <button id="yesButton" class="response-button" onclick="handleResponse('yes')">
+                <a href="https://toonsquad.world/index.php/checklist/" style="text-decoration: none; color: #fff;"> Next > </a>
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>
